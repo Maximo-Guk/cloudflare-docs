@@ -13,10 +13,10 @@
     "dev": "concurrently --kill-others \"npm run dev:hugo\" \"npm run dev:vite\"",
     "lint": "tsm bin/format.ts --check",
     "crawl": "tsm bin/crawl.ts",
-    "build:hugo": "hugo",
-    "build:vite": "vite build",
-    "build:post": "npm run build:vite && mv public/dist dist && cp -nr public/. dist/ && rm -rf public && mv dist public",
-    "build": "npm run build:hugo && npm run build:post",
+    "build:hugo": "ls -a && df && hugo --cacheDir ~/.hugo-cache-bust && rm -R ~/.hugo-cache-bust",
+    "build:vite": "ls -a && df && ls -al && vite build && df",
+    "build:post": "npm run build:vite && df && cp -nr public/. dist/ && rm -rf public && mv dist public",
+    "build": "export NODE_OPTIONS=--max-old-space-size=4096 && npm run build:hugo && npm run build:post",
     "build:local": "./hugo && npm run build:post"
   },
   "dependencies": {
@@ -46,8 +46,7 @@
     "tsm": "2.3.0",
     "typescript": "~5.5.3",
     "vite": "^5.3.3",
-    "vue-tsc": "^2.0.26",
-    "wrangler": "3.63.1"
+    "vue-tsc": "^2.0.26"
   },
   "volta": {
     "node": "20.15.0"

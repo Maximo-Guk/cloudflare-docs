@@ -4,13 +4,14 @@ import { defineConfig, type PluginOption } from "vite";
 import { globSync } from "glob";
 import { highlight } from "./bin/prism.config";
 import vue from "@vitejs/plugin-vue";
+import path from "node:path";
 
 const encoder = new TextEncoder();
 const decoder = new TextDecoder();
 
 async function rewrite(
   document: string,
-  handlers: [string, ElementHandlers][]
+  handlers: [string, ElementHandlers][],
 ) {
   let output = "";
   const rewriter = new HTMLRewriter((outputChunk) => {
@@ -51,7 +52,7 @@ const hydrateVueComponents = (): PluginOption => {
                   const root = document.getElementById('vue-c-${nId}')
                   createApp(Component, {...root.dataset}).mount(root, true)
               </script>`,
-                  { html: true }
+                  { html: true },
                 );
               },
             },
@@ -101,7 +102,7 @@ const renderPlaygroundLink = (): PluginOption => {
       </div>`,
                   {
                     html: true,
-                  }
+                  },
                 );
               } else {
                 element.remove();
@@ -139,11 +140,11 @@ const renderCodeBlock = (): PluginOption => {
                 await highlight(
                   code,
                   element.getAttribute("data-language")!,
-                  ""
+                  "",
                 ),
                 {
                   html: true,
-                }
+                },
               );
             },
           },
@@ -160,7 +161,7 @@ export default defineConfig({
     hydrateVueComponents(),
     vue(),
   ],
-  root: "public",
+  root: "/opt/buildhome/repo/public",
   resolve: {
     alias: {
       "@": fileURLToPath(new URL("./components", import.meta.url)),
@@ -169,7 +170,10 @@ export default defineConfig({
   },
   build: {
     rollupOptions: {
-      input: globSync("public/**/*.html"),
+      input: globSync("/opt/buildhome/repo/public/**/*.html"),
+      output: {
+        dir: "/opt/buildhome/repo/dist",
+      },
     },
     reportCompressedSize: false,
   },

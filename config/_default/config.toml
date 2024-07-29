@@ -8,10 +8,10 @@ enableRobotsTXT = false
 summaryLength = 30
 disableAliases = true
 disableKinds = ["taxonomy"]
-timeout = "120s"
+timeout = "86400s"
 
 enableEmoji = true
-enableGitInfo = true
+enableGitInfo = false
 
 paginate = 12 # default 10
 paginatePath = "page" # default

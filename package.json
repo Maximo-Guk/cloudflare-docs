@@ -16,7 +16,7 @@
     "build:hugo": "ls -a && df && hugo --cacheDir ~/.hugo-cache-bust && rm -R ~/.hugo-cache-bust",
     "build:vite": "ls -a && df && ls -al && vite build && df",
     "build:post": "npm run build:vite && df && cp -nr public/. dist/ && rm -rf public && mv dist public",
-    "build": "export NODE_OPTIONS=--max-old-space-size=4096 && lscpu && npm run build:hugo && npm run build:post",
+    "build": "export NODE_OPTIONS=--max-old-space-size=4096 && npm run build:hugo && npm run build:post",
     "build:local": "./hugo && npm run build:post"
   },
   "dependencies": {
